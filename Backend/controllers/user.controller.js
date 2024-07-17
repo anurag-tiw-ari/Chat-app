@@ -1,6 +1,6 @@
 import { asyncHandler } from "../util/asyncHandler.js";
-import { User } from "../models/User.model.js";
-
+import { User } from "../models/user.model.js";
+import jwt from "jsonwebtoken";
 
 import bcrypt from "bcryptjs"
 
@@ -124,7 +124,7 @@ const loginUser=asyncHandler(async function(req,res)
     }
 
     
-  const {accessToken,refreshToken} = generateAccessAndRefreshTokens(user._id)
+  const {accessToken,refreshToken} = await generateAccessAndRefreshTokens(user._id)
 
   const loggedInUser=await User.findById(user._id).select(
     "-password -refreshToken"
@@ -155,7 +155,77 @@ const loginUser=asyncHandler(async function(req,res)
 
 })
 
+const logoutUser=asyncHandler(async function(req,res)
+{
+    const options={
+        httpOnly:true,                              
+        secure:true,
+    }
+    return res
+    .status(200)
+    .cookie("accessToken","",options)
+    .cookie("refreshToken","",options)
+    .json({message:"User Logged Out Successfully"})
+})
+
+
+const refreshAccessToken=asyncHandler(async function(req,res)
+{
+   const incomingRefreshToken=req.cookies.refreshToken || req.body.refresh
+
+   if(!incomingRefreshToken){
+          return res.status(401).json({message:"unauthorized request"})
+   }
+
+  const decodedToken= jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET)
+
+  const user=User.findById(decodedToken?._id)
+
+  if(!user){
+    return res.status(401).json({message:"Invalid refresh Token"})
+      }
+
+      if(incomingRefreshToken!==user?.refreshToken)
+        {
+            return res.status(401).json({message:"Invalid refresh Token or Expired"})
+        }
+
+      const {accessToken,refreshToken}  = await generateAccessAndRefreshTokens(user._id)
+
+      const options={
+        httpOnly:true,                              //After this cookies cant modify from frontend
+        secure:true,
+            }
+        return res
+        .status(200)
+        .cookie("accessToken",accessToken,options)
+        .cookie("refreshToken",refreshToken,options)
+        .json(
+            new ApiResponse(
+                200,
+                {
+                    accessToken,
+                    refreshToken
+                },
+                "Access Token Refresh Succesfully"
+            )
+        )
+
+})
+
+const getOtherUsers=asyncHandler(async function(req,res)
+{
+      const loggedInUserId=req.user?._id
+      
+      const otherUsers=await User.find({_id:{$ne:loggedInUserId}}).select("-password -refreshToken")
+
+      return res.status(200).json(otherUsers)
+})
+
 export {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser,
+    refreshAccessToken,
+    getOtherUsers
 }

@@ -1,5 +1,5 @@
 import mongoose,{Schema} from "mongoose"
-import jwt from "jsonwebtoken"
+import jwt from 'jsonwebtoken'
 
 const userSchema=new Schema(
     {
@@ -37,7 +37,6 @@ userSchema.methods.generateAccessToken=function(){
         {
             _id:this.id,
             username:this.username,
-            fullname:this.fullname
         },
         process.env.ACCESS_TOKEN_SECRET,
         {
