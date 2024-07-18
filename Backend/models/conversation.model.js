@@ -6,7 +6,7 @@ const conversationSchema=new Schema(
         type:Schema.Types.ObjectId,
         ref:"User"
     }],
-    meesages:[{
+    messages:[{
         type:Schema.Types.ObjectId,
         ref:"Message"
     }]
