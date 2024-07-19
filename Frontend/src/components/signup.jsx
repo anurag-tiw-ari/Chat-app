@@ -1,5 +1,7 @@
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 function SignUp()
 {
@@ -10,19 +12,45 @@ function SignUp()
     confirmPassword:"",
     gender:""
    })
+   const navigate=useNavigate()
 
    const handleCheckbox = ((gender) => 
     {
     setUser({ ...user, gender });
   })
 
-   const onSubmitHandler = async (e) => {
+   const onSubmitHandler = async (e) => 
+    {
     e.preventDefault();
-    console.log(user)
+    try {
+        const res= await axios.post(`http://localhost:8000/api/v1/user/register`,user,{
+            headers:{
+                "Content-Type":"application/json"
+            },
+            withCredentials:true
+        })
+
+     //   console.log(res)
+   //  console.log(res.data.success)
+    if(res.data.success)
+    {
+        toast.success(res.data.message)
+        navigate("/login")
+
+    }
+
+    } 
+        catch (error) {
+
+            toast.error(error.response.data.message)
+            console.log("signup-error: ",error)
+        }
+        
+    
 }
 
     return (
-        <div className="min-w-96 mx-auto">
+        <div className="w-96 mx-auto">
           <div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>
             <h1 className='text-3xl font-bold text-center'>Signup</h1>
             <form onSubmit={onSubmitHandler} action="">
