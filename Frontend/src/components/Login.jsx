@@ -4,6 +4,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { setAuthUser } from "../redux/userSlice";
+import { setSelectedUser } from "../redux/userSlice";
 
 
 function Login()
@@ -31,15 +32,18 @@ function Login()
             })
     
           // console.log(res)
-         console.log(res.data)
+         console.log("logindata:",res.data.loggedInUser)
 
            if(res.data.success)
             {
+              dispatch(setAuthUser(res.data.loggedInUser))
+              localStorage.setItem('authuser', JSON.stringify(res.data.loggedInUser));
+              dispatch(setSelectedUser(null))
                 navigate("/")
                 toast.success(res.data.message)
             }
 
-            dispatch(setAuthUser(res.data))
+
 
         } catch (error) {
 

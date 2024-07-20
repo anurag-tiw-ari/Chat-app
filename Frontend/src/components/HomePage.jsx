@@ -4,18 +4,40 @@ import MessageContainer from "./MessageContainer";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { setAuthUser, setSelectedUser } from "../redux/userSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+
 
 function HomePage()
 {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+    const dispatch = useDispatch();
+    let { authuser } = useSelector(store => store.user) ;
+    if(!authuser)
+      {
+          authuser=JSON.parse(localStorage.getItem('authuser'));
+      }
+
+    // Hook to check authentication status
+    useEffect(() => {
+        if (!authuser) {
+            navigate("/login");
+        }
+    }, [authuser, navigate]);
+
 
    async function logoutHandler()
    {
     try{
+      
           axios.defaults.withCredentials=true  
           const res  =   await axios.get("http://localhost:8000/api/v1/user/logout")
           navigate("/login")
           toast.success(res.data.message)
+          dispatch(setAuthUser(null))
+          localStorage.setItem('authuser',null);
     }
     catch(error){
       console.log(error)

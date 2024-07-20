@@ -3,6 +3,8 @@ import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { Message } from "../models/message.model.js";
 import { Conversation } from "../models/conversation.model.js";
+import { io } from "../socket/socket.js";
+import { getReceiverScketID } from "../socket/socket.js";
 
 const sendMessage = asyncHandler(async function(req,res){
     const senderId=req.user._id
@@ -39,7 +41,13 @@ const sendMessage = asyncHandler(async function(req,res){
 
     //SOCKET IO
 
-    return res.status(200).json({message:"message send"})
+    const recieverSocketId = getReceiverScketID(recieverId);
+    if(recieverSocketId)
+    {
+        io.to(recieverSocketId).emit("newMessage",newMessage)
+    }
+
+    return res.status(200).json({newMessage})
 
 })
 
@@ -54,7 +62,7 @@ const getMessage = asyncHandler(async function(req,res)
     
  //   console.log(getConversation)
 
-    return res.status(200).json({message:"Got message"})
+    return res.status(200).json(getConversation?.messages)
 
 })
 

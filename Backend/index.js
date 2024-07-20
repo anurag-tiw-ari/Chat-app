@@ -4,16 +4,17 @@ import dotenv from "dotenv"
 import connectDB from "./DB/database.js"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import { app,server } from "./socket/socket.js";
 
 
 dotenv.config({})
-const app=express()
+
 
 const PORT=process.env.PORT || 6000
 
-app.listen(PORT,()=>{
+/*app.listen(PORT,()=>{
     console.log("successfully running on", PORT)
-})
+})*/
 
 connectDB()
 .then(()=>{
@@ -24,7 +25,7 @@ connectDB()
 })
 
 app.use(cors({
-    origin:process.env.CORS_ORIGIN,
+    origin:"http://localhost:5173",
     credentials:true
 }
 ))
@@ -41,3 +42,8 @@ import messageRouter from "./routes/message.route.js"
 
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/message",messageRouter)
+
+server.listen(PORT, ()=>{
+    connectDB();
+    console.log(`Server listen at prot ${PORT}`);
+});

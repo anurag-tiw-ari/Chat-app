@@ -7,5 +7,5 @@ import { getMessage, sendMessage } from "../controllers/message.controller.js";
 const router=Router();
 //console.log("hi")
 router.route("/send/:id").post(verifyJWT,sendMessage)
-router.route("/get/:id").post(verifyJWT,getMessage)
+router.route("/get/:id").get(verifyJWT,getMessage)
 export default router

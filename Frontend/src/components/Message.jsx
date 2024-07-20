@@ -1,39 +1,35 @@
 import React, { useEffect, useRef } from 'react'
 import {useSelector} from "react-redux";
 
-const Message = () => 
+const Message = ({message}) => 
     {
+
+        const scroll=useRef();
+
+        let {authuser} =useSelector(store=>store.user)
+    if(!authuser)
+    {
+        authuser=JSON.parse(localStorage.getItem('authuser'));
+    }
+    const {selectedUser}=useSelector(store=>store.user)
+      //  console.log("authID:",authuser?._id)
+      //  console.log(message?.senderId)
+
+        useEffect(()=>{
+            scroll.current?.scrollIntoView({behaviour:"smooth"})
+        })
     
     return (
         <>
-        <div className="chat chat-start">
+      <div ref={scroll} className={`chat ${authuser?._id===message?.senderId ? "chat-end":"chat-start"}`}>
         <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
+          <div className="w-9 rounded-full">
             <img
               alt="Tailwind CSS chat bubble component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+              src={authuser?._id===message?.senderId ? authuser?.profilePhoto : selectedUser?.profilePhoto} />
           </div>
         </div>
-        <div className="chat-header">
-          Obi-Wan Kenobi
-          <time className="text-xs opacity-50">12:45</time>
-        </div>
-        <div className="chat-bubble">You were the Chosen One!</div>
-        <div className="chat-footer opacity-50">Delivered</div>
-      </div>
-      <div className="chat chat-end">
-        <div className="chat-image avatar">
-          <div className="w-10 rounded-full">
-            <img
-              alt="Tailwind CSS chat bubble component"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-          </div>
-        </div>
-        <div className="chat-header">
-          Anakin
-          <time className="text-xs opacity-50">12:46</time>
-        </div>
-        <div className="chat-bubble">I hate you!</div>
+        <div className="chat-bubble ">{message?.message}</div>
         <div className="chat-footer opacity-50">Seen at 12:46</div>
       </div>
         </>

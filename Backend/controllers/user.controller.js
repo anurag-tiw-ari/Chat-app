@@ -29,19 +29,19 @@ const registerUser=asyncHandler(async function(req,res)
 
    if ([fullName,username,password,confirmPassword,gender].some((ce) => ce?.trim() === "")) 
     {
-    return res.status(400).json({ message: "All fields are required." });
+    return res.status(400).json({ message: "All fields are required.",success:false });
 }
 
 if(password!==confirmPassword) 
     {
-        return res.status(400).json({ message: "Password Does Not Match" });
+        return res.status(400).json({ message: "Password Does Not Match" ,success:false});
 }
     
 const existedUser=await User.findOne({username})
 
    if(existedUser)
         {
-            return res.status(409).json({ message: "User already existed." });
+            return res.status(409).json({ message: "Username already existed.",success:false });
         }
       /* console.log("Request.files=",req.file)*/
 
@@ -92,7 +92,7 @@ const existedUser=await User.findOne({username})
     return res.status(500).json({ message: "Something went wrong while registering the user." });
    }
 
-   return res.status(201).json({data:createdUser,message:"User Registered Successfully"})   //sentback to client
+   return res.status(201).json({data:createdUser,message:"User Registered Successfully", success:true})   //sentback to client
    
 
 })
@@ -104,23 +104,23 @@ const loginUser=asyncHandler(async function(req,res)
     console.log(username)
     if(!username)
     {
-        return res.status(400).json({message:"Username Required"})
+        return res.status(400).json({message:"Username Required" ,success:false})
     }
     if(!password)
     {
-        return res.status(400).json({message:"Password Required"})
+        return res.status(400).json({message:"Password Required" ,success:false})
     }
 
     const user = await User.findOne({ username });
     if (!user) 
         {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "User not found" ,success:false});
     }
 
     const checkPassword=await bcrypt.compare(password,user.password)
     if (!checkPassword) 
     {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(400).json({ message: "Invalid credentials" ,success:false});
     }
 
     
@@ -142,12 +142,14 @@ const loginUser=asyncHandler(async function(req,res)
         .cookie("refreshToken",refreshToken,options)
         .json(
             {
-             data:  {
+             
                     loggedInUser,
                     accessToken,
-                    refreshToken
-                },
-             message:  "User Logged in Successfully"
+                    refreshToken,
+                    message:  "User Logged in Successfully",
+                    success:true
+                
+             
             }
             )
         
@@ -165,7 +167,7 @@ const logoutUser=asyncHandler(async function(req,res)
     .status(200)
     .cookie("accessToken","",options)
     .cookie("refreshToken","",options)
-    .json({message:"User Logged Out Successfully"})
+    .json({message:"User Logged Out Successfully",success:false})
 })
 
 
@@ -174,7 +176,7 @@ const refreshAccessToken=asyncHandler(async function(req,res)
    const incomingRefreshToken=req.cookies.refreshToken || req.body.refresh
 
    if(!incomingRefreshToken){
-          return res.status(401).json({message:"unauthorized request"})
+          return res.status(401).json({message:"unauthorized request" ,success:false})
    }
 
   const decodedToken= jwt.verify(incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET)
@@ -182,12 +184,12 @@ const refreshAccessToken=asyncHandler(async function(req,res)
   const user=User.findById(decodedToken?._id)
 
   if(!user){
-    return res.status(401).json({message:"Invalid refresh Token"})
+    return res.status(401).json({message:"Invalid refresh Token" ,success:false})
       }
 
       if(incomingRefreshToken!==user?.refreshToken)
         {
-            return res.status(401).json({message:"Invalid refresh Token or Expired"})
+            return res.status(401).json({message:"Invalid refresh Token or Expired" ,success:false})
         }
 
       const {accessToken,refreshToken}  = await generateAccessAndRefreshTokens(user._id)
@@ -201,15 +203,15 @@ const refreshAccessToken=asyncHandler(async function(req,res)
         .cookie("accessToken",accessToken,options)
         .cookie("refreshToken",refreshToken,options)
         .json(
-            new ApiResponse(
-                200,
-                {
-                    accessToken,
-                    refreshToken
-                },
-                "Access Token Refresh Succesfully"
+            {
+                
+                       accessToken,
+                       refreshToken,
+                       success:true
+                
+               }
             )
-        )
+        
 
 })
 
