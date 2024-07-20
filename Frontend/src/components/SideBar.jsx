@@ -4,8 +4,8 @@ import OtherUsers from './OtherUsers';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setOtherUsers } from '../redux/userSlice';
-function SideBar(){
-
+function SideBar({isSelect}){
+ console.log("check",isSelect)
     const [search,setSearch] =useState("")
     const {otherUsers}=useSelector(store=>store.user)
     const dispatch=useDispatch()
@@ -28,7 +28,8 @@ function SideBar(){
     }
 
     return (
-        <div className='border-l-2 border-slate-600 px-4 pt-1 flex flex-col md:w-3/4 w-full h-[280px] md:h-full'>
+        <div className={`border-l-2 border-slate-600 bg-primary px-4 pt-2 flex flex-col md:w-3/4 w-full 
+        h-[280px] md:h-full  ${isSelect ? "": "hidden"}`}>
             <form  onSubmit={onSubmitHandler} action="" className='flex items-center'>
                 <input
                     value={search}

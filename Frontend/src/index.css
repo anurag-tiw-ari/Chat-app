@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body
+/*body
 {
   background-image:url("https://www.pixel4k.com/wp-content/uploads/2019/03/mountains-landscape-dark-nature-4k_1551643707.jpg");
   background-size:cover;
@@ -10,4 +10,9 @@ body
   background-repeat:no-repeat;
   height:100vh;
   width:100%;
+}*/
+
+*{
+  margin:0;
+  padding:0
 }

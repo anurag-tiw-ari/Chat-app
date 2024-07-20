@@ -7,9 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { setSocket } from './redux/socketSlice';
 import { setOnlineUser } from './redux/userSlice';
+import LandingPage from './components/LandingPage';
 
 const router = createBrowserRouter([
-  { path: "/", element: <HomePage /> },
+  {path: "/", element: <LandingPage />},
+  { path: "/chat", element: <HomePage /> },
   { path: "/register", element: <SignUp /> },
   { path: "/login", element: <Login /> }
 ]);
@@ -52,7 +54,7 @@ function App() {
   }, [authuser,dispatch]);
 
   return (
-    <div className="App p-4 flex justify-center items-center h-screen">
+    <div className="App  flex justify-center items-center h-screen">
       <RouterProvider router={router} />
     </div>
   );

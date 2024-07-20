@@ -10,8 +10,10 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 
+
 function HomePage()
 {
+  const [isSelect,setIsSelect]=useState(false)
   const navigate = useNavigate();
     const dispatch = useDispatch();
     let { authuser } = useSelector(store => store.user) ;
@@ -45,15 +47,17 @@ function HomePage()
    }
 
      return (
+      <section className="bg-black w-full h-screen flex justify-center items-center">
         <div className="flex flex-col">
-        <div className='border-slate-500 border-2 gap:2 flex md:h-[550px] h-[600px] md:w-[800px] w-[400px] md:flex-row flex-col rounded-lg overflow-hidden bg-gray-900 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
-      <MessageContainer className="order-1" />
-      <SideBar className="order-2" />
+        <div className='gap:2 flex md:h-[550px] h-[600px] md:w-[800px] w-[400px] md:flex-row flex-col rounded-lg overflow-hidden bg-white '>
+      <MessageContainer className="order-1" setIsSelect={setIsSelect} isSelect={isSelect} />
+      <SideBar className="order-2"  isSelect={isSelect}/>
     </div>
     <div className='mt-8 mx-auto'>
                 <button className='btn btn-sm' onClick={logoutHandler}>Logout</button>
             </div>
     </div>
+    </section>
      )
 }
 

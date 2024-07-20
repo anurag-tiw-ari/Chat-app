@@ -21,7 +21,7 @@ const Message = ({message}) =>
     
     return (
         <>
-      <div ref={scroll} className={`chat ${authuser?._id===message?.senderId ? "chat-end":"chat-start"}`}>
+      <div ref={scroll} className={`chat ${authuser?._id===message?.senderId ? "chat-end":"chat-start"} `}>
         <div className="chat-image avatar">
           <div className="w-9 rounded-full">
             <img
@@ -29,8 +29,8 @@ const Message = ({message}) =>
               src={authuser?._id===message?.senderId ? authuser?.profilePhoto : selectedUser?.profilePhoto} />
           </div>
         </div>
-        <div className="chat-bubble ">{message?.message}</div>
-        <div className="chat-footer opacity-50">Seen at 12:46</div>
+        <div className={`chat-bubble ${message?.senderId !== authuser?._id ? 'bg-primary' : ''} `}>{message?.message}</div>
+        
       </div>
         </>
         

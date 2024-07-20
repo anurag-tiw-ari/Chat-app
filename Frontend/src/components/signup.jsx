@@ -50,55 +50,56 @@ function SignUp()
 }
 
     return (
+      <section className="h-screen w-screen flex items-center bg-blue-700 ">
         <div className="w-96 mx-auto">
-          <div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>
+          <div className='w-full p-6 rounded-2xl shadow-md bg-white bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-100 border border-gray-100'>
             <h1 className='text-3xl font-bold text-center'>Signup</h1>
             <form onSubmit={onSubmitHandler} action="">
               <div>
                 <label className='label p-2'>
-                  <span className='text-base label-text text-slate-300'>Full Name</span>
+                  <span className='text-base label-text text-slate-900'>Full Name</span>
                 </label>
                 <input
                   value={user.fullName}
                   onChange={(e) => setUser({ ...user, fullName: e.target.value })}
-                  className='w-full input input-bordered h-10'
+                  className='w-full input input-bordered h-10 outline-none'
                   type="text"
                   placeholder='Full Name' />
               </div>
               <div>
                 <label className='label p-2'>
-                  <span className='text-base label-text text-slate-300'>Username</span>
+                  <span className='text-base label-text text-slate-900'>Username</span>
                 </label>
                 <input
                   value={user.username}
                   onChange={(e) => setUser({ ...user, username: e.target.value })}
-                  className='w-full input input-bordered h-10'
+                  className='w-full input input-bordered h-10 outline-none'
                   type="text"
                   placeholder='Username' />
               </div>
               <div>
                 <label className='label p-2'>
-                  <span className='text-base label-text text-slate-300'>Password</span>
+                  <span className='text-base label-text text-slate-900'>Password</span>
                 </label>
                 <input
                   value={user.password}
                   onChange={(e) => setUser({ ...user, password: e.target.value })}
-                  className='w-full input input-bordered h-10'
+                  className='w-full input input-bordered h-10 outline-none'
                   type="password"
                   placeholder='Password' />
               </div>
               <div>
                 <label className='label p-2'>
-                  <span className='text-base label-text text-slate-300'>Confirm Password</span>
+                  <span className='text-base label-text text-slate-900'>Confirm Password</span>
                 </label>
                 <input
                   value={user.confirmPassword}
                   onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
-                  className='w-full input input-bordered h-10'
+                  className='w-full input input-bordered h-10 outline-none'
                   type="password"
                   placeholder='Confirm Password' />
               </div>
-              <div className='flex items-center my-4 text-white justify-between'>
+              <div className='flex items-center my-4 text-slate-900 justify-between'>
                 <div className='flex items-center'>
                 <label htmlFor="Male">Male</label>
                   <input
@@ -128,15 +129,16 @@ function SignUp()
                     />
                 </div>
               </div>
-              <p className='text-center my-2 text-white'>Already have an account? <Link 
+              <p className='text-center my-2 text-gray-900'>Already have an account? <Link 
               to="/login"
-              className="text-blue-600 hover:text-blue-700"> Login </Link></p>
+              className="text-blue-600 hover:text-blue-900"> Login </Link></p>
               <div>
-                <button type='submit' className='btn w-full  btn-sm mt-2 border border-slate-700'>Signup</button>
+                <button type='submit' className=' w-full rounded-lg  btn-sm mt-2  bg-black text-white hover:text-gray-300'>Signup</button>
               </div>
             </form>
           </div>
         </div>
+        </section>
       )
 }
 

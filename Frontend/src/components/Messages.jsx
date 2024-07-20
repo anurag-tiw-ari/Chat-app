@@ -16,7 +16,7 @@ const Messages = () => {
     
 
     return (
-        <div className='px-2 flex-1 overflow-y-scroll '>
+        <div className='px-2 flex-1 overflow-auto ' style={{ backgroundImage:`url("")`}}>
            
         {
             messages.map((message)=>{

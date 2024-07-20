@@ -39,7 +39,7 @@ function Login()
               dispatch(setAuthUser(res.data.loggedInUser))
               localStorage.setItem('authuser', JSON.stringify(res.data.loggedInUser));
               dispatch(setSelectedUser(null))
-                navigate("/")
+                navigate("/chat")
                 toast.success(res.data.message)
             }
 
@@ -54,14 +54,15 @@ function Login()
     
 
     return (
+      <section className="h-screen w-screen flex items-center bg-blue-700 ">
         <div className="w-96 mx-auto">
-          <div className='w-full p-6 rounded-lg shadow-md bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-10 border border-gray-100'>
+          <div className='w-full p-6 rounded-2xl shadow-md bg-white bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-100 border border-gray-100'>
             <h1 className='text-3xl font-bold text-center'>Login</h1>
             <form  onSubmit={onSubmitHandler} action="">
     
               <div>
                 <label className='label p-2'>
-                  <span className='text-base label-text text-slate-300'>Username</span>
+                  <span className='text-base label-text text-slate-900'>Username</span>
                 </label>
                 <input
                   value={user.username}
@@ -72,7 +73,7 @@ function Login()
               </div>
               <div>
                 <label className='label p-2'>
-                  <span className='text-base label-text text-slate-300'>Password</span>
+                  <span className='text-base label-text text-slate-900'>Password</span>
                 </label>
                 <input
                 value={user.password}
@@ -81,13 +82,14 @@ function Login()
                   type="password"
                   placeholder='Password' />
               </div>
-              <p className='text-center my-2 text-white'>Don't have an account? <Link to="/register" class="text-blue-600 hover:text-blue-700"> Signup </Link></p>
+              <p className='text-center my-2 text-slate-900'>Don't have an account? <Link to="/register" class="text-blue-600 hover:text-blue-800"> Signup </Link></p>
               <div>
-                <button type="submit" className='btn w-full btn-sm mt-2 border border-slate-700'>Login</button>
+                <button type='submit' className=' w-full rounded-lg  btn-sm mt-2  bg-black text-white hover:text-gray-300'>Login</button>
               </div>
             </form>
           </div>
         </div>
+        </section>
       )
 }
 
