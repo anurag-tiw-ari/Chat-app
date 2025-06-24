@@ -11,7 +11,7 @@ const useGetOtherUsers=(()=>{
         try {
             axios.defaults.withCredentials=true
             const res= await axios.get("https:/chat-app-5-4dgk.onrender.com/api/v1/user")
-            console.log(res)
+            console.log("res:", res)
 
             dispatch(setOtherUsers(res.data))
 
