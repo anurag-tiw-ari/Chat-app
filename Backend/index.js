@@ -6,6 +6,10 @@ import cors from "cors"
 import cookieParser from "cookie-parser"
 import { app,server } from "./socket/socket.js";
 
+import path from "path"
+
+
+const __dirname = path.resolve()
 
 dotenv.config({})
 
@@ -42,6 +46,12 @@ import messageRouter from "./routes/message.route.js"
 
 app.use("/api/v1/user",userRouter)
 app.use("/api/v1/message",messageRouter)
+
+app.use(express.static(path.join(__dirname,"/Frontend/dist")))
+
+app.get("*",(req,res)=>{
+     res.sendFile(path.resolve(__dirname,"Frontend","dist","index.html"))
+})
 
 server.listen(PORT, ()=>{
     connectDB();
