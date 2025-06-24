@@ -4,6 +4,7 @@ import OtherUsers from './OtherUsers';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setOtherUsers } from '../redux/userSlice';
+import toast from "react-hot-toast";
 function SideBar({isSelect}){
  console.log("check",isSelect)
     const [search,setSearch] =useState("")
@@ -14,6 +15,8 @@ function SideBar({isSelect}){
     {
         e.preventDefault()
 
+        console.log("search:", search)
+        console.log("otherUsrrs:", OtherUsers)
         const searchUser = otherUsers?.find((user) => 
             user.username.toLowerCase() === search.toLowerCase()
         );

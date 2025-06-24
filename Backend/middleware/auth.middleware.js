@@ -6,7 +6,12 @@ import { User } from "../models/user.model.js";
 // User Logged In hai ki nhi dekhne ke liye
 export const verifyJWT=asyncHandler(async function(req,res,next)
 {
+   
+   console.log("cookies:", req.cookies)
+
    const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer","")
+   
+   console.log("token:", token)
 
    if(!token)
     {

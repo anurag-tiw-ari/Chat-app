@@ -54,7 +54,7 @@ function App() {
   }, [authuser,dispatch]);
 
   return (
-    <div className="App  flex justify-center items-center h-screen">
+    <div >
       <RouterProvider router={router} />
     </div>
   );

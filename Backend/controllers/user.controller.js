@@ -13,11 +13,14 @@ const generateAccessAndRefreshTokens=async(userId)=>
 
                 user.refreshToken=refreshToken
                 await user.save({ validateBeforeSave: false})
-
+                
+                // console.log("Access Token:", accessToken);
+                // console.log("Refresh Token:", refreshToken);
                 return {accessToken,refreshToken}
              }
              catch(error){
-                return res.status(500).json({message:"Something Went Wrong ,Try Again"})
+                //return res.status(500).json({message:"Something Went Wrong ,Try Again"})
+                return {};
              } 
     }
 
@@ -61,19 +64,21 @@ const existedUser=await User.findOne({username})
    
    console.log(profilePhotoCloudinary?.url)*/
 
-   if(gender==="others")
-    {
-          profilePhotoLocalPath=`https://avatar.iran.liara.run/public?username=${username}`
-    }
-   else if(gender==="male")
-        {
-          profilePhotoLocalPath=`https://avatar.iran.liara.run/public/boy?username=${username}`
-        }
-    else
-        {
-          profilePhotoLocalPath=`https://avatar.iran.liara.run/public/girl?username=${username}`
-        }
-        console.log(profilePhotoLocalPath)
+//    if(gender==="others")
+//     {
+//           profilePhotoLocalPath=`https://avatar.iran.liara.run/public?username=${username}`
+//     }
+//    else if(gender==="male")
+//         {
+//           profilePhotoLocalPath=`https://api.dicebear.com/6.x/bottts/svg?seed=$`
+//         }
+//     else
+//         {
+//           profilePhotoLocalPath=`https://avatar.iran.liara.run/public/girl?username=${username}`
+//         }
+
+        profilePhotoLocalPath=`https://api.dicebear.com/6.x/bottts/svg?seed=${username}`
+        console.log("profilePhotoLocalPath:", profilePhotoLocalPath)
 
   const user = await User.create({
        fullName,

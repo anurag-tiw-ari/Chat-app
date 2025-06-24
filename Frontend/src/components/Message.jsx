@@ -29,7 +29,7 @@ const Message = ({message}) =>
               src={authuser?._id===message?.senderId ? authuser?.profilePhoto : selectedUser?.profilePhoto} />
           </div>
         </div>
-        <div className={`chat-bubble ${message?.senderId !== authuser?._id ? 'bg-primary' : ''} `}>{message?.message}</div>
+        <div className={`chat-bubble ${message?.senderId !== authuser?._id ? 'bg-primary text-white' : ''} `}>{message?.message}</div>
         
       </div>
         </>
