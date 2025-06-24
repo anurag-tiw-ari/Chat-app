@@ -10,7 +10,7 @@ const OtherUsers = () => {
     
    useGetOtherUsers()
    const {otherUsers}=useSelector(store=>store.user)
-   if(!otherUsers)  return;        //early return
+   if (!otherUsers || !Array.isArray(otherUsers)) return null       //early return
 
 
     

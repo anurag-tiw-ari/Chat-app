@@ -13,11 +13,12 @@ const useGetOtherUsers=(()=>{
             const res= await axios.get("https:/chat-app-5-4dgk.onrender.com/api/v1/user")
             console.log("res:", res)
 
-            dispatch(setOtherUsers(res.data))
+            dispatch(setOtherUsers(res.data || []))
 
 
         } catch (error) {
             console.log(error)
+            dispatch(setOtherUsers([]))
         }
     }
 

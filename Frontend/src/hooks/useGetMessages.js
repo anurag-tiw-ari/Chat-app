@@ -14,10 +14,11 @@ const useGetMessages = () => {
                 const res = await axios.get(`https:/chat-app-5-4dgk.onrender.com/api/v1/message/get/${selectedUser._id}`)
              console.log(res)
 
-             dispatch(setMessages(res.data))
+             dispatch(setMessages(res.data || []))
             }
         } catch (error) {
             console.log(error)
+            dispatch(setMessages([]))
         }
     }
 
