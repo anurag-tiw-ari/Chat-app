@@ -35,7 +35,7 @@ function HomePage()
     try{
       
           axios.defaults.withCredentials=true  
-          const res  =   await axios.get("http://localhost:8000/api/v1/user/logout")
+          const res  =   await axios.get("https://chat-app-5-4dgk.onrender.com/api/v1/user/logout")
           navigate("/login")
           toast.success(res.data.message)
           dispatch(setAuthUser(null))

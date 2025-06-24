@@ -23,7 +23,7 @@ function SignUp()
     {
     e.preventDefault();
     try {
-        const res= await axios.post(`http://localhost:8000/api/v1/user/register`,user,{
+        const res= await axios.post(`https://chat-app-5-4dgk.onrender.com/api/v1/user/register`,user,{
             headers:{
                 "Content-Type":"application/json"
             },

@@ -29,7 +29,7 @@ connectDB()
 })
 
 app.use(cors({
-    origin:"http://localhost:5173",
+    origin:"https://chat-app-5-4dgk.onrender.com",
     credentials:true
 }
 ))

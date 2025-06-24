@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     if (authuser) {
       
-      const newsocket = io("http://localhost:8000", {
+      const newsocket = io("https://chat-app-5-4dgk.onrender.com", {
         query: {
           userId: authuser._id
         }
